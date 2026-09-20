@@ -8,6 +8,9 @@
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://ianshul337.github.io/Student_tools/">
 <meta name="theme-color" content="#4f46e5">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="StudentTools">
 <meta property="og:title" content="StudentTools">
 <meta property="og:description" content="Free online tools for students.">
 <meta property="og:type" content="website">
@@ -54,7 +57,7 @@ input[type=range]{padding:0}
 <nav><a class="brand" href="#" onclick="showHome()">🎓 StudentTools</a>
 <div class="navlinks"><a href="#" onclick="showPage('about')">About</a><a href="#" onclick="showPage('privacy')">Privacy</a><a href="#" onclick="showPage('contact')">Contact</a><button onclick="toggleDark()">🌙</button></div></nav>
 <div class="hero"><h1>StudentTools</h1><p>Simple, fast and free tools for students — calculators, text tools, QR codes and more.</p><input id="search" class="search" placeholder="🔎 Search a tool..." oninput="filterTools()">
-<button id="installBtn" class="secondary install" onclick="installApp()">📲 Install StudentTools</button></div>
+<button id="installBtn" class="secondary" onclick="installApp()">📲 Install App</button></div>
 </div>
 </header>
 
@@ -302,8 +305,29 @@ function renderRecent(){
     grid.appendChild(copy);
   });sec.style.display='block';
 }
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstall=e;document.getElementById('installBtn').classList.add('show')});
-async function installApp(){if(!deferredInstall)return;deferredInstall.prompt();await deferredInstall.userChoice;deferredInstall=null;document.getElementById('installBtn').classList.remove('show')}
+let deferredInstall=null;
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();
+  deferredInstall=e;
+});
+window.addEventListener('appinstalled',()=>{
+  deferredInstall=null;
+  document.getElementById('installBtn').textContent='✅ App Installed';
+});
+async function installApp(){
+  const btn=document.getElementById('installBtn');
+  if(deferredInstall){
+    deferredInstall.prompt();
+    try{await deferredInstall.userChoice}catch(e){}
+    deferredInstall=null;
+    return;
+  }
+  if(window.matchMedia('(display-mode: standalone)').matches){
+    btn.textContent='✅ Already Installed';
+    return;
+  }
+  alert('Android Chrome: browser ke ⋮ menu par tap karo → Add to Home screen / Install app. Agar option na dikhe to page ko ek baar refresh karke dobara try karo.');
+}
 loadFavs();renderRecent();
 </script></body>
 </html>
