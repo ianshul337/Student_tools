@@ -3,11 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="StudentTools - free online calculators and useful tools for students.">
+<meta name="description" content="StudentTools - free online calculators, converters, study tools, PDF tools, image tools and productivity tools for students.">
+<meta name="keywords" content="student tools, percentage calculator, CGPA calculator, age calculator, word counter, QR generator, image compressor, PDF to JPG, JPG to PDF, study timer, unit converter">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://ianshul337.github.io/Student_tools/">
 <meta name="theme-color" content="#4f46e5">
 <meta property="og:title" content="StudentTools">
 <meta property="og:description" content="Free online tools for students.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://ianshul337.github.io/Student_tools/">
+<meta name="twitter:card" content="summary">
 <title>StudentTools - Free Student Tools</title>
 <link rel="icon" href="favicon.svg">
 <link rel="manifest" href="manifest.webmanifest">
@@ -36,6 +41,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
 textarea{min-height:130px;resize:vertical}
 #qr img{max-width:260px;border-radius:12px;margin-top:12px;background:white;padding:8px}
 input[type=range]{padding:0}
+
+.categorybar{display:flex;gap:8px;overflow:auto;padding:4px 0 14px;scrollbar-width:none}.categorybar::-webkit-scrollbar{display:none}
+.catbtn{white-space:nowrap;border:1px solid #dfe3ee;background:white;color:#344054;padding:9px 13px;border-radius:999px;cursor:pointer;font-weight:600}.catbtn.active{background:#4f46e5;color:white;border-color:#4f46e5}.dark .catbtn{background:#181d28;color:#d9def0;border-color:#343c4e}.dark .catbtn.active{background:#4f46e5;color:white}
+.card-top{display:flex;justify-content:space-between;gap:8px}.fav{border:0;background:transparent;font-size:20px;cursor:pointer;padding:0}.tool-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.tag{font-size:11px;padding:3px 7px;border-radius:999px;background:#eef0ff;color:#4338ca}.dark .tag{background:#252b42;color:#bfc7ff}
+.install{display:none;margin:10px auto 0}.install.show{display:inline-block}.empty{display:none;text-align:center;padding:20px}.statbar{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;color:#667085;margin-top:10px}.dark .statbar{color:#aab3c7}
 </style>
 </head>
 <body>
@@ -43,37 +53,49 @@ input[type=range]{padding:0}
 <div class="wrap">
 <nav><a class="brand" href="#" onclick="showHome()">🎓 StudentTools</a>
 <div class="navlinks"><a href="#" onclick="showPage('about')">About</a><a href="#" onclick="showPage('privacy')">Privacy</a><a href="#" onclick="showPage('contact')">Contact</a><button onclick="toggleDark()">🌙</button></div></nav>
-<div class="hero"><h1>StudentTools</h1><p>Simple, fast and free tools for students — calculators, text tools, QR codes and more.</p><input id="search" class="search" placeholder="🔎 Search a tool..." oninput="filterTools()"></div>
+<div class="hero"><h1>StudentTools</h1><p>Simple, fast and free tools for students — calculators, text tools, QR codes and more.</p><input id="search" class="search" placeholder="🔎 Search a tool..." oninput="filterTools()">
+<button id="installBtn" class="secondary install" onclick="installApp()">📲 Install StudentTools</button></div>
 </div>
 </header>
 
 <main class="wrap">
 <div id="home" class="page active">
 <section><div class="section-title"><h2>⭐ Popular Tools</h2></div>
+<div class="categorybar">
+<button class="catbtn active" onclick="setCategory('all',this)">All</button>
+<button class="catbtn" onclick="setCategory('calculator',this)">🧮 Calculators</button>
+<button class="catbtn" onclick="setCategory('study',this)">📚 Study</button>
+<button class="catbtn" onclick="setCategory('pdf',this)">📄 PDF</button>
+<button class="catbtn" onclick="setCategory('image',this)">🖼️ Image</button>
+<button class="catbtn" onclick="setCategory('text',this)">✍️ Text</button>
+<button class="catbtn" onclick="setCategory('utility',this)">🛠️ Utilities</button>
+</div>
+<div class="statbar"><span>⚡ Fast browser tools</span><span>🔒 Most processing stays on your device</span><span>💙 Free to use</span></div>
 <div class="grid">
-<div class="card tool" data-name="percentage calculator"><h3>🧮 Percentage Calculator</h3><p>Calculate marks percentage instantly.</p><button class="primary" onclick="openTool('percentage')">Use Tool</button></div>
-<div class="card tool" data-name="age calculator"><h3>🎂 Age Calculator</h3><p>Find your exact age from date of birth.</p><button class="primary" onclick="openTool('age')">Use Tool</button></div>
-<div class="card tool" data-name="word counter"><h3>🔢 Word Counter</h3><p>Count words, characters, sentences and paragraphs.</p><button class="primary" onclick="openTool('words')">Use Tool</button></div>
+<div class="card tool" data-name="percentage calculator"><h3>🧮 Percentage Calculator</h3><button class="fav" title="Favourite" onclick="toggleFav(this)">☆</button><p>Calculate marks percentage instantly.</p><button class="primary" onclick="openTool('percentage')">Use Tool</button></div>
+<div class="card tool" data-name="age calculator"><h3>🎂 Age Calculator</h3><button class="fav" title="Favourite" onclick="toggleFav(this)">☆</button><p>Find your exact age from date of birth.</p><button class="primary" onclick="openTool('age')">Use Tool</button></div>
+<div class="card tool" data-name="word counter"><h3>🔢 Word Counter</h3><button class="fav" title="Favourite" onclick="toggleFav(this)">☆</button><p>Count words, characters, sentences and paragraphs.</p><button class="primary" onclick="openTool('words')">Use Tool</button></div>
 </div></section>
 
+<section id="recentSection" style="display:none"><div class="section-title"><h2>🕘 Recently Used</h2></div><div id="recentGrid" class="grid"></div></section>
 <section><div class="section-title"><h2>🛠️ All Tools</h2></div>
 <div class="grid">
-<div class="card tool" data-name="percentage calculator marks"><h3>🧮 Percentage Calculator</h3><p>Enter obtained and total marks.</p><button class="primary" onclick="openTool('percentage')">Open</button></div>
-<div class="card tool" data-name="cgpa calculator grade point"><h3>🎓 CGPA Calculator</h3><p>Calculate average CGPA from subject grade points.</p><button class="primary" onclick="openTool('cgpa')">Open</button></div>
-<div class="card tool" data-name="age calculator birthday dob"><h3>🎂 Age Calculator</h3><p>Calculate years, months and days.</p><button class="primary" onclick="openTool('age')">Open</button></div>
-<div class="card tool" data-name="word counter text"><h3>🔢 Word Counter</h3><p>Count words, characters, sentences and paragraphs.</p><button class="primary" onclick="openTool('words')">Open</button></div>
-<div class="card tool" data-name="qr code generator link url"><h3>🔗 QR Code Generator</h3><p>Create a QR code from text or a URL.</p><button class="primary" onclick="openTool('qr')">Open</button></div>
-<div class="card tool" data-name="image compressor photo jpg"><h3>🖼️ Image Compressor</h3><p>Compress images directly in your browser.</p><button class="primary" onclick="openTool('compress')">Open</button></div>
-<div class="card tool" data-name="pdf to jpg pdf image converter"><h3>📄 PDF → JPG</h3><p>Convert PDF pages into JPG images.</p><button class="primary" onclick="openTool('pdfjpg')">Open</button></div>
-<div class="card tool" data-name="jpg to pdf image pdf converter"><h3>🖼️ JPG → PDF</h3><p>Turn an image into a downloadable PDF.</p><button class="primary" onclick="openTool('jpgpdf')">Open</button></div>
-<div class="card tool" data-name="notes generator study notes"><h3>📝 Notes Generator</h3><p>Create clean study notes from your text.</p><button class="primary" onclick="openTool('notes')">Open</button></div>
-<div class="card tool" data-name="ai study assistant ai helper"><h3>🤖 AI Study Assistant</h3><p>Build a study prompt and get structured help.</p><button class="primary" onclick="openTool('ai')">Open</button></div>
-<div class="card tool" data-name="unit converter units"><h3>📏 Unit Converter</h3><p>Convert common length, weight and temperature units.</p><button class="primary" onclick="openTool('units')">Open</button></div>
-<div class="card tool" data-name="study timer pomodoro"><h3>⏱️ Study Timer</h3><p>Simple focus timer for study sessions.</p><button class="primary" onclick="openTool('timer')">Open</button></div>
-<div class="card tool" data-name="discount calculator sale"><h3>🏷️ Discount Calculator</h3><p>Calculate discount amount and final price.</p><button class="primary" onclick="openTool('discount')">Open</button></div>
-<div class="card tool" data-name="cgpa percentage converter cgpa to percentage"><h3>🎓 CGPA → Percentage</h3><p>Convert CGPA using a selected conversion formula.</p><button class="primary" onclick="openTool('cgpapct')">Open</button></div>
-<div class="card tool" data-name="average calculator mean"><h3>📊 Average Calculator</h3><p>Calculate the average of multiple numbers.</p><button class="primary" onclick="openTool('average')">Open</button></div>
-</div></section>
+<div class="card tool" data-name="percentage calculator marks" data-category="calculator"><h3>🧮 Percentage Calculator</h3><button class="fav" title="Favourite" onclick="toggleFav(this)">☆</button><p>Enter obtained and total marks.</p><button class="primary" onclick="openTool('percentage')">Open</button></div>
+<div class="card tool" data-name="cgpa calculator grade point" data-category="calculator"><h3>🎓 CGPA Calculator</h3><button class="fav" title="Favourite" onclick="toggleFav(this)">☆</button><p>Calculate average CGPA from subject grade points.</p><button class="primary" onclick="openTool('cgpa')">Open</button></div>
+<div class="card tool" data-name="age calculator birthday dob" data-category="calculator"><h3>🎂 Age Calculator</h3><button class="fav" title="Favourite" onclick="toggleFav(this)">☆</button><p>Calculate years, months and days.</p><button class="primary" onclick="openTool('age')">Open</button></div>
+<div class="card tool" data-name="word counter text" data-category="text"><h3>🔢 Word Counter</h3><button class="fav" title="Favourite" onclick="toggleFav(this)">☆</button><p>Count words, characters, sentences and paragraphs.</p><button class="primary" onclick="openTool('words')">Open</button></div>
+<div class="card tool" data-name="qr code generator link url" data-category="utility"><h3>🔗 QR Code Generator</h3><button class="fav" title="Favourite" onclick="toggleFav(this)">☆</button><p>Create a QR code from text or a URL.</p><button class="primary" onclick="openTool('qr')">Open</button></div>
+<div class="card tool" data-name="image compressor photo jpg" data-category="image"><h3>🖼️ Image Compressor</h3><button class="fav" title="Favourite" onclick="toggleFav(this)">☆</button><p>Compress images directly in your browser.</p><button class="primary" onclick="openTool('compress')">Open</button></div>
+<div class="card tool" data-name="pdf to jpg pdf image converter" data-category="pdf"><h3>📄 PDF → JPG</h3><button class="fav" title="Favourite" onclick="toggleFav(this)">☆</button><p>Convert PDF pages into JPG images.</p><button class="primary" onclick="openTool('pdfjpg')">Open</button></div>
+<div class="card tool" data-name="jpg to pdf image pdf converter" data-category="pdf"><h3>🖼️ JPG → PDF</h3><button class="fav" title="Favourite" onclick="toggleFav(this)">☆</button><p>Turn an image into a downloadable PDF.</p><button class="primary" onclick="openTool('jpgpdf')">Open</button></div>
+<div class="card tool" data-name="notes generator study notes" data-category="study"><h3>📝 Notes Generator</h3><button class="fav" title="Favourite" onclick="toggleFav(this)">☆</button><p>Create clean study notes from your text.</p><button class="primary" onclick="openTool('notes')">Open</button></div>
+<div class="card tool" data-name="ai study assistant ai helper" data-category="study"><h3>🤖 AI Study Assistant</h3><button class="fav" title="Favourite" onclick="toggleFav(this)">☆</button><p>Build a study prompt and get structured help.</p><button class="primary" onclick="openTool('ai')">Open</button></div>
+<div class="card tool" data-name="unit converter units" data-category="utility"><h3>📏 Unit Converter</h3><button class="fav" title="Favourite" onclick="toggleFav(this)">☆</button><p>Convert common length, weight and temperature units.</p><button class="primary" onclick="openTool('units')">Open</button></div>
+<div class="card tool" data-name="study timer pomodoro" data-category="study"><h3>⏱️ Study Timer</h3><button class="fav" title="Favourite" onclick="toggleFav(this)">☆</button><p>Simple focus timer for study sessions.</p><button class="primary" onclick="openTool('timer')">Open</button></div>
+<div class="card tool" data-name="discount calculator sale" data-category="calculator"><h3>🏷️ Discount Calculator</h3><button class="fav" title="Favourite" onclick="toggleFav(this)">☆</button><p>Calculate discount amount and final price.</p><button class="primary" onclick="openTool('discount')">Open</button></div>
+<div class="card tool" data-name="cgpa percentage converter cgpa to percentage" data-category="calculator"><h3>🎓 CGPA → Percentage</h3><button class="fav" title="Favourite" onclick="toggleFav(this)">☆</button><p>Convert CGPA using a selected conversion formula.</p><button class="primary" onclick="openTool('cgpapct')">Open</button></div>
+<div class="card tool" data-name="average calculator mean" data-category="calculator"><h3>📊 Average Calculator</h3><button class="fav" title="Favourite" onclick="toggleFav(this)">☆</button><p>Calculate the average of multiple numbers.</p><button class="primary" onclick="openTool('average')">Open</button></div>
+</div><div id="emptySearch" class="empty">😕 No matching tools found.</div></section>
 
 <section id="toolArea">
 <div id="percentage" class="toolbox card"><h2>🧮 Percentage Calculator</h2><label>Obtained Marks</label><input id="obt" type="number" min="0"><label>Total Marks</label><input id="total" type="number" min="1"><button class="primary" onclick="calcPercent()">Calculate</button><button class="secondary" onclick="copyText('percentResult')">Copy</button><div id="percentResult" class="result">Your result will appear here.</div></div>
@@ -232,5 +254,56 @@ function convertCgpaPct(){
   cgpaPctResult.textContent=`Approx. Percentage: ${(c*mult).toFixed(2)}%`;
 }
 </script>
-</body>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(()=>{});}
+let activeCategory='all', deferredInstall=null;
+function setCategory(cat,btn){
+  activeCategory=cat; document.querySelectorAll('.catbtn').forEach(x=>x.classList.remove('active')); btn.classList.add('active'); filterTools();
+}
+function filterTools(){
+  const q=document.getElementById('search').value.toLowerCase().trim();
+  let shown=0;
+  document.querySelectorAll('.tool').forEach(c=>{
+    const matchText=c.dataset.name.includes(q);
+    const matchCat=activeCategory==='all'||c.dataset.category===activeCategory;
+    c.style.display=matchText&&matchCat?'block':'none';
+    if(matchText&&matchCat)shown++;
+  });
+  document.getElementById('emptySearch').style.display=shown?'none':'block';
+}
+function favKey(){return 'stFavs'}
+function getFavs(){try{return JSON.parse(localStorage.getItem(favKey())||'[]')}catch(e){return []}}
+function toggleFav(btn){
+  const card=btn.closest('.tool'), name=card.dataset.name, favs=getFavs(), i=favs.indexOf(name);
+  if(i>=0){favs.splice(i,1);btn.textContent='☆'}else{favs.push(name);btn.textContent='★'}
+  localStorage.setItem(favKey(),JSON.stringify(favs));
+}
+function loadFavs(){
+  const favs=getFavs();document.querySelectorAll('.tool').forEach(c=>{const b=c.querySelector('.fav');if(b)b.textContent=favs.includes(c.dataset.name)?'★':'☆'})
+}
+const oldOpenTool=openTool;
+openTool=function(id){
+  oldOpenTool(id);
+  const el=document.getElementById(id), card=el?el.previousElementSibling:null;
+  let name=id;
+  document.querySelectorAll('.tool').forEach(c=>{if(c.querySelector(`button[onclick*="openTool('${id}')"]`))name=c.dataset.name});
+  let recent;try{recent=JSON.parse(localStorage.getItem('stRecent')||'[]')}catch(e){recent=[]}
+  recent=[name,...recent.filter(x=>x!==name)].slice(0,5);localStorage.setItem('stRecent',JSON.stringify(recent));renderRecent();
+}
+function renderRecent(){
+  let recent;try{recent=JSON.parse(localStorage.getItem('stRecent')||'[]')}catch(e){recent=[]}
+  const grid=document.getElementById('recentGrid'), sec=document.getElementById('recentSection'); if(!grid)return;
+  if(!recent.length){sec.style.display='none';return}
+  grid.innerHTML='';
+  recent.forEach(name=>{
+    const source=[...document.querySelectorAll('.tool')].find(c=>c.dataset.name===name);
+    if(!source)return;
+    const copy=source.cloneNode(true);copy.querySelectorAll('.fav').forEach(x=>x.remove());
+    const btn=copy.querySelector('button'); if(btn){btn.textContent='Open';btn.onclick=()=>{const m=source.querySelector('button[onclick*="openTool"]');if(m)m.click()}}
+    grid.appendChild(copy);
+  });sec.style.display='block';
+}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstall=e;document.getElementById('installBtn').classList.add('show')});
+async function installApp(){if(!deferredInstall)return;deferredInstall.prompt();await deferredInstall.userChoice;deferredInstall=null;document.getElementById('installBtn').classList.remove('show')}
+loadFavs();renderRecent();
+</script></body>
 </html>
