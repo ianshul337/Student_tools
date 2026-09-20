@@ -1,0 +1,13 @@
+StudentTools V6 SEO pages
+
+Upload the entire extracted folder contents to the GitHub Pages repo root.
+New URLs include:
+https://ianshul337.github.io/Student_tools/percentage-calculator/
+https://ianshul337.github.io/Student_tools/cgpa-calculator/
+https://ianshul337.github.io/Student_tools/age-calculator/
+https://ianshul337.github.io/Student_tools/word-counter/
+https://ianshul337.github.io/Student_tools/image-compressor/
+https://ianshul337.github.io/Student_tools/pdf-to-jpg/
+https://ianshul337.github.io/Student_tools/jpg-to-pdf/
+
+After deployment, submit sitemap.xml in Google Search Console.
