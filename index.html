@@ -3,21 +3,31 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StudentTools</title>
+<meta name="description" content="Free online student tools: percentage, CGPA, age, word counter, QR generator and image compressor.">
+<title>StudentTools - Free Student Tools</title>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#1f2937}
-header{background:white;padding:18px 20px;box-shadow:0 2px 10px #0001}.nav{max-width:1100px;margin:auto;display:flex;justify-content:space-between}
+header{background:#fff;padding:18px 20px;box-shadow:0 2px 10px #0001;position:sticky;top:0;z-index:5}
+.nav{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:center}
 .logo{font-size:22px;font-weight:bold}.logo span,.ans{color:#4f46e5}
-.hero{text-align:center;padding:50px 20px 30px}.hero h1{font-size:36px}.hero h1 span{color:#4f46e5}.hero p{color:#6b7280}
-.tools{max-width:1100px;margin:auto;padding:20px}.tools h2{text-align:center}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.card,.box{background:white;padding:24px;border-radius:16px;box-shadow:0 4px 15px #0001}.card h3{margin:8px 0}.card p{color:#6b7280;font-size:14px;line-height:1.5}.icon{font-size:34px}
-button{border:0;background:#4f46e5;color:white;padding:11px 18px;border-radius:9px;cursor:pointer}
-.calc{display:none;max-width:520px;margin:30px auto;padding:20px}.box h2{text-align:center}.sub{text-align:center;color:#6b7280}
-.field{margin:14px 0}.field label{display:block;font-weight:bold;margin-bottom:6px}.field input{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;font-size:16px}
-.result{display:none;background:#eef2ff;padding:18px;margin-top:18px;text-align:center;border-radius:12px}.ans{font-size:32px;font-weight:bold;margin:7px}.err{display:none;color:#dc2626;margin:10px 0;font-size:14px}
-.back{text-align:center;margin-top:18px}.note{font-size:12px;color:#6b7280;line-height:1.5;margin-top:14px}
-footer{text-align:center;background:white;padding:25px;color:#6b7280;margin-top:50px}
-@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.grid{grid-template-columns:1fr}.hero h1{font-size:30px}}
+.hero{text-align:center;padding:52px 20px 30px}.hero h1{font-size:36px;margin:0 0 12px}.hero h1 span{color:#4f46e5}.hero p{color:#6b7280}
+.tools{max-width:1100px;margin:auto;padding:20px}.tools h2{text-align:center;margin-bottom:25px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card,.box{background:#fff;padding:24px;border-radius:16px;box-shadow:0 4px 15px #0001}
+.card{transition:.2s}.card:hover{transform:translateY(-3px)}.card h3{margin:8px 0}.card p{color:#6b7280;font-size:14px;line-height:1.5;min-height:42px}.icon{font-size:34px}
+button{border:0;background:#4f46e5;color:#fff;padding:11px 18px;border-radius:9px;cursor:pointer;font-size:14px}
+button:hover{background:#4338ca}.secondary{background:#6b7280}.danger{background:#dc2626}
+.calc{display:none;max-width:560px;margin:30px auto;padding:20px}.box h2{text-align:center;margin-top:0}.sub{text-align:center;color:#6b7280}
+.field{margin:14px 0}.field label{display:block;font-weight:bold;margin-bottom:6px}.field input,.field textarea,.field select{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;font-size:16px}
+.field textarea{min-height:180px;resize:vertical}.result{display:none;background:#eef2ff;padding:18px;margin-top:18px;text-align:center;border-radius:12px}
+.ans{font-size:32px;font-weight:bold;margin:7px}.err{display:none;color:#dc2626;margin:10px 0;font-size:14px}
+.back{text-align:center;margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.note{font-size:12px;color:#6b7280;line-height:1.5;margin-top:14px}
+.qrbox{text-align:center;margin-top:20px}.qrbox canvas,.qrbox img{max-width:100%;background:white;padding:10px;border-radius:8px}
+.preview{max-width:100%;margin-top:15px;border-radius:10px;display:none}.stats{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:15px}.stat{background:#f3f4f6;padding:10px 14px;border-radius:8px}
+footer{text-align:center;background:#fff;padding:25px;color:#6b7280;margin-top:50px}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:30px}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.hero{padding-top:40px}}
 </style>
 </head>
 <body>
@@ -26,40 +36,130 @@ footer{text-align:center;background:white;padding:25px;color:#6b7280;margin-top:
 <section class="hero" id="home"><h1>Useful <span>Student Tools</span> in One Place</h1><p>Free, simple and easy-to-use tools for students.</p></section>
 
 <section class="tools" id="tools"><h2>🛠️ Our Tools</h2><div class="grid">
-<div class="card"><div class="icon">🧮</div><h3>Percentage Calculator</h3><p>Calculate percentage from obtained and total marks.</p><button onclick="openCalc('percent')">Open Tool</button></div>
-<div class="card"><div class="icon">🎓</div><h3>CGPA Calculator</h3><p>Calculate the average of your subject grade points.</p><button onclick="openCalc('cgpa')">Open Tool</button></div>
-<div class="card"><div class="icon">🎂</div><h3>Age Calculator</h3><p>Calculate your exact age from your date of birth.</p><button onclick="soon()">Open Tool</button></div>
-<div class="card"><div class="icon">🔢</div><h3>Word Counter</h3><p>Count words and characters in your text.</p><button onclick="soon()">Open Tool</button></div>
-<div class="card"><div class="icon">🔗</div><h3>QR Code Generator</h3><p>Create QR codes for links and text.</p><button onclick="soon()">Open Tool</button></div>
-<div class="card"><div class="icon">🖼️</div><h3>Image Compressor</h3><p>Reduce image size while keeping good quality.</p><button onclick="soon()">Open Tool</button></div>
+<div class="card"><div class="icon">🧮</div><h3>Percentage Calculator</h3><p>Calculate percentage from obtained and total marks.</p><button onclick="openTool('percent')">Open Tool</button></div>
+<div class="card"><div class="icon">🎓</div><h3>CGPA Calculator</h3><p>Calculate the average of your subject grade points.</p><button onclick="openTool('cgpa')">Open Tool</button></div>
+<div class="card"><div class="icon">🎂</div><h3>Age Calculator</h3><p>Calculate your exact age in years, months and days.</p><button onclick="openTool('age')">Open Tool</button></div>
+<div class="card"><div class="icon">🔢</div><h3>Word Counter</h3><p>Count words, characters, sentences and paragraphs.</p><button onclick="openTool('words')">Open Tool</button></div>
+<div class="card"><div class="icon">🔗</div><h3>QR Code Generator</h3><p>Create a QR code for any text, link or message.</p><button onclick="openTool('qr')">Open Tool</button></div>
+<div class="card"><div class="icon">🖼️</div><h3>Image Compressor</h3><p>Compress images directly in your browser and download them.</p><button onclick="openTool('image')">Open Tool</button></div>
 </div></section>
 
+<!-- Percentage -->
 <section class="calc" id="percent"><div class="box">
 <h2>🧮 Percentage Calculator</h2><p class="sub">Enter obtained and total marks.</p>
 <div class="field"><label>Obtained Marks</label><input id="obt" type="number" min="0" placeholder="425"></div>
 <div class="field"><label>Total Marks</label><input id="tot" type="number" min="1" placeholder="500"></div>
 <div class="err" id="perr"></div><button onclick="calcPercent()">Calculate Percentage</button>
 <div class="result" id="pres"><div>Your Percentage</div><div class="ans" id="pans"></div><div id="ptext"></div></div>
-<div class="back"><button onclick="home()">← Back to Tools</button></div>
+<div class="back"><button class="secondary" onclick="home()">← Back to Tools</button></div>
 </div></section>
 
+<!-- CGPA -->
 <section class="calc" id="cgpa"><div class="box">
 <h2>🎓 CGPA Calculator</h2><p class="sub">Enter 5 subject grade points (0–10).</p>
-<div id="gps"></div><div class="err" id="cerr"></div>
-<button onclick="calcCGPA()">Calculate CGPA</button>
+<div id="gps"></div><div class="err" id="cerr"></div><button onclick="calcCGPA()">Calculate CGPA</button>
 <div class="result" id="cres"><div>Your CGPA</div><div class="ans" id="cans"></div><div>Average of your 5 grade points</div></div>
-<p class="note">This uses a simple average of the grade points. Percentage conversion depends on your board or institution, so it is not automatically converted.</p>
-<div class="back"><button onclick="home()">← Back to Tools</button></div>
+<p class="note">This uses a simple average of the grade points. Percentage conversion depends on your board or institution.</p>
+<div class="back"><button class="secondary" onclick="home()">← Back to Tools</button></div>
+</div></section>
+
+<!-- Age -->
+<section class="calc" id="age"><div class="box">
+<h2>🎂 Age Calculator</h2><p class="sub">Enter your date of birth.</p>
+<div class="field"><label>Date of Birth</label><input id="dob" type="date"></div>
+<div class="err" id="aerr"></div><button onclick="calcAge()">Calculate Age</button>
+<div class="result" id="ares"><div>Your Age</div><div class="ans" id="aans"></div><div id="atext"></div></div>
+<div class="back"><button class="secondary" onclick="home()">← Back to Tools</button></div>
+</div></section>
+
+<!-- Word Counter -->
+<section class="calc" id="words"><div class="box">
+<h2>🔢 Word Counter</h2><p class="sub">Paste or type your text below.</p>
+<div class="field"><textarea id="wordtext" oninput="countWords()" placeholder="Type or paste your text here..."></textarea></div>
+<div class="stats">
+<div class="stat">Words: <b id="wcWords">0</b></div><div class="stat">Characters: <b id="wcChars">0</b></div>
+<div class="stat">Sentences: <b id="wcSent">0</b></div><div class="stat">Paragraphs: <b id="wcPara">0</b></div>
+</div>
+<div class="back"><button onclick="clearWords()" class="secondary">Clear</button><button class="secondary" onclick="home()">← Back to Tools</button></div>
+</div></section>
+
+<!-- QR -->
+<section class="calc" id="qr"><div class="box">
+<h2>🔗 QR Code Generator</h2><p class="sub">Enter text or a website link.</p>
+<div class="field"><label>Text / URL</label><input id="qrtext" placeholder="https://example.com"></div>
+<button onclick="makeQR()">Generate QR Code</button>
+<div class="qrbox" id="qrbox"></div>
+<div class="back"><button class="secondary" onclick="downloadQR()">Download QR</button><button class="secondary" onclick="home()">← Back to Tools</button></div>
+<p class="note">QR generation uses a public QR image service, so an internet connection is required.</p>
+</div></section>
+
+<!-- Image Compressor -->
+<section class="calc" id="image"><div class="box">
+<h2>🖼️ Image Compressor</h2><p class="sub">Choose an image and compress it in your browser.</p>
+<div class="field"><label>Image</label><input id="imageFile" type="file" accept="image/*" onchange="loadImage()"></div>
+<div class="field"><label>Quality: <span id="qualityLabel">70%</span></label><input id="quality" type="range" min="10" max="100" value="70" oninput="qualityLabel.textContent=this.value+'%';compressImage()"></div>
+<img id="preview" class="preview">
+<div class="stats" id="imageStats"></div>
+<div class="back"><button id="downloadImage" onclick="downloadCompressed()" style="display:none">Download Compressed</button><button class="secondary" onclick="home()">← Back to Tools</button></div>
+<p class="note">Your selected image is processed in your browser and is not uploaded by this page.</p>
 </div></section>
 
 <footer>© 2026 StudentTools • Free Student Tools</footer>
 
 <script>
-function openCalc(x){document.getElementById("home").style.display="none";document.getElementById("tools").style.display="none";document.getElementById("percent").style.display=x==="percent"?"block":"none";document.getElementById("cgpa").style.display=x==="cgpa"?"block":"none";if(x==="cgpa"&&!document.getElementById("gps").children.length){for(let i=1;i<=5;i++){document.getElementById("gps").innerHTML+=`<div class="field"><label>Subject ${i} Grade Point</label><input class="gp" type="number" min="0" max="10" step="0.1" placeholder="e.g. 8.5"></div>`}}scrollTo(0,0)}
-function home(){document.getElementById("percent").style.display="none";document.getElementById("cgpa").style.display="none";document.getElementById("home").style.display="block";document.getElementById("tools").style.display="block";scrollTo(0,0)}
-function calcPercent(){let o=+obt.value,t=+tot.value;if(!obt.value||!tot.value||t<=0||o<0||o>t){perr.textContent="Please enter valid marks. Obtained marks must not exceed total marks.";perr.style.display="block";pres.style.display="none";return}perr.style.display="none";pans.textContent=(o/t*100).toFixed(2)+"%";ptext.textContent=o+" out of "+t+" marks";pres.style.display="block"}
-function calcCGPA(){let a=[...document.querySelectorAll(".gp")].map(x=>+x.value);if(a.length!==5||a.some(x=>isNaN(x)||x<0||x>10)){cerr.textContent="Enter all 5 grade points between 0 and 10.";cerr.style.display="block";cres.style.display="none";return}cerr.style.display="none";cans.textContent=(a.reduce((x,y)=>x+y,0)/5).toFixed(2);cres.style.display="block"}
-function soon(){alert("This tool is coming soon! 🚀")}
+const ids=['percent','cgpa','age','words','qr','image'];
+function openTool(id){
+ document.getElementById('home').style.display='none';document.getElementById('tools').style.display='none';
+ ids.forEach(x=>document.getElementById(x).style.display=x===id?'block':'none');
+ if(id==='cgpa'&&!document.getElementById('gps').children.length){for(let i=1;i<=5;i++)document.getElementById('gps').innerHTML+=`<div class="field"><label>Subject ${i} Grade Point</label><input class="gp" type="number" min="0" max="10" step="0.1" placeholder="e.g. 8.5"></div>`}
+ scrollTo(0,0)
+}
+function home(){ids.forEach(x=>document.getElementById(x).style.display='none');document.getElementById('home').style.display='block';document.getElementById('tools').style.display='block';scrollTo(0,0)}
+function calcPercent(){
+ let o=+obt.value,t=+tot.value;if(!obt.value||!tot.value||t<=0||o<0||o>t){perr.textContent='Please enter valid marks. Obtained marks must not exceed total marks.';perr.style.display='block';pres.style.display='none';return}
+ perr.style.display='none';pans.textContent=(o/t*100).toFixed(2)+'%';ptext.textContent=o+' out of '+t+' marks';pres.style.display='block'
+}
+function calcCGPA(){
+ let a=[...document.querySelectorAll('.gp')].map(x=>+x.value);if(a.length!==5||a.some(x=>isNaN(x)||x<0||x>10)){cerr.textContent='Enter all 5 grade points between 0 and 10.';cerr.style.display='block';cres.style.display='none';return}
+ cerr.style.display='none';cans.textContent=(a.reduce((x,y)=>x+y,0)/5).toFixed(2);cres.style.display='block'
+}
+function calcAge(){
+ let d=new Date(dob.value+'T00:00:00'),now=new Date();if(!dob.value||isNaN(d)||d>now){aerr.textContent='Please enter a valid past date.';aerr.style.display='block';ares.style.display='none';return}
+ let y=now.getFullYear()-d.getFullYear(),m=now.getMonth()-d.getMonth(),day=now.getDate()-d.getDate();
+ if(day<0){m--;day+=new Date(now.getFullYear(),now.getMonth(),0).getDate()}if(m<0){y--;m+=12}
+ aerr.style.display='none';aans.textContent=y+' years, '+m+' months, '+day+' days';atext.textContent='Calculated up to today';ares.style.display='block'
+}
+function countWords(){
+ let t=wordtext.value,words=t.trim()?t.trim().split(/\\s+/).length:0,sent=t.trim()?t.split(/[.!?]+/).filter(x=>x.trim()).length:0,para=t.trim()?t.split(/\\n\\s*\\n/).filter(x=>x.trim()).length:0;
+ wcWords.textContent=words;wcChars.textContent=t.length;wcSent.textContent=sent;wcPara.textContent=para
+}
+function clearWords(){wordtext.value='';countWords()}
+function makeQR(){
+ let t=qrtext.value.trim();if(!t){alert('Please enter text or a URL.');return}
+ let url='https://api.qrserver.com/v1/create-qr-code/?size=260x260&data='+encodeURIComponent(t);
+ qrbox.innerHTML='<img id="qrimg" src="'+url+'" alt="Generated QR Code">'
+}
+function downloadQR(){
+ let img=document.getElementById('qrimg');if(!img){alert('Generate a QR code first.');return}
+ let a=document.createElement('a');a.href=img.src;a.download='studenttools-qr.png';a.target='_blank';a.click()
+}
+let compressedBlob=null;
+function loadImage(){
+ let file=imageFile.files[0];if(!file)return;
+ let reader=new FileReader();reader.onload=e=>{preview.src=e.target.result;preview.style.display='block';compressImage()};reader.readAsDataURL(file)
+}
+function compressImage(){
+ let file=imageFile.files[0];if(!file||!preview.src)return;
+ let im=new Image();im.onload=()=>{
+  let max=2000,scale=Math.min(1,max/im.width,max/im.height),c=document.createElement('canvas');c.width=Math.round(im.width*scale);c.height=Math.round(im.height*scale);
+  c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+  c.toBlob(b=>{compressedBlob=b;downloadImage.style.display='inline-block';let old=(file.size/1024).toFixed(1),nw=(b.size/1024).toFixed(1);imageStats.innerHTML='<div class="stat">Original: <b>'+old+' KB</b></div><div class="stat">Compressed: <b>'+nw+' KB</b></div>'},'image/jpeg',+quality.value/100)
+ };im.src=preview.src
+}
+function downloadCompressed(){
+ if(!compressedBlob){alert('Choose an image first.');return}
+ let a=document.createElement('a');a.href=URL.createObjectURL(compressedBlob);a.download='studenttools-compressed.jpg';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)
+}
 </script>
 </body>
 </html>
