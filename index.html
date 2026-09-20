@@ -64,6 +64,15 @@ input[type=range]{padding:0}
 <div class="card tool" data-name="word counter text"><h3>🔢 Word Counter</h3><p>Count words, characters, sentences and paragraphs.</p><button class="primary" onclick="openTool('words')">Open</button></div>
 <div class="card tool" data-name="qr code generator link url"><h3>🔗 QR Code Generator</h3><p>Create a QR code from text or a URL.</p><button class="primary" onclick="openTool('qr')">Open</button></div>
 <div class="card tool" data-name="image compressor photo jpg"><h3>🖼️ Image Compressor</h3><p>Compress images directly in your browser.</p><button class="primary" onclick="openTool('compress')">Open</button></div>
+<div class="card tool" data-name="pdf to jpg pdf image converter"><h3>📄 PDF → JPG</h3><p>Convert PDF pages into JPG images.</p><button class="primary" onclick="openTool('pdfjpg')">Open</button></div>
+<div class="card tool" data-name="jpg to pdf image pdf converter"><h3>🖼️ JPG → PDF</h3><p>Turn an image into a downloadable PDF.</p><button class="primary" onclick="openTool('jpgpdf')">Open</button></div>
+<div class="card tool" data-name="notes generator study notes"><h3>📝 Notes Generator</h3><p>Create clean study notes from your text.</p><button class="primary" onclick="openTool('notes')">Open</button></div>
+<div class="card tool" data-name="ai study assistant ai helper"><h3>🤖 AI Study Assistant</h3><p>Build a study prompt and get structured help.</p><button class="primary" onclick="openTool('ai')">Open</button></div>
+<div class="card tool" data-name="unit converter units"><h3>📏 Unit Converter</h3><p>Convert common length, weight and temperature units.</p><button class="primary" onclick="openTool('units')">Open</button></div>
+<div class="card tool" data-name="study timer pomodoro"><h3>⏱️ Study Timer</h3><p>Simple focus timer for study sessions.</p><button class="primary" onclick="openTool('timer')">Open</button></div>
+<div class="card tool" data-name="discount calculator sale"><h3>🏷️ Discount Calculator</h3><p>Calculate discount amount and final price.</p><button class="primary" onclick="openTool('discount')">Open</button></div>
+<div class="card tool" data-name="cgpa percentage converter cgpa to percentage"><h3>🎓 CGPA → Percentage</h3><p>Convert CGPA using a selected conversion formula.</p><button class="primary" onclick="openTool('cgpapct')">Open</button></div>
+<div class="card tool" data-name="average calculator mean"><h3>📊 Average Calculator</h3><p>Calculate the average of multiple numbers.</p><button class="primary" onclick="openTool('average')">Open</button></div>
 </div></section>
 
 <section id="toolArea">
@@ -78,16 +87,36 @@ input[type=range]{padding:0}
 <div id="qr" class="toolbox card"><h2>🔗 QR Code Generator</h2><label>Text or URL</label><input id="qrText" placeholder="https://example.com"><button class="primary" onclick="makeQr()">Generate QR</button><p class="small">Uses an external QR service; don't enter sensitive information.</p><div id="qrBox"></div></div>
 
 <div id="compress" class="toolbox card"><h2>🖼️ Image Compressor</h2><label>Select Image</label><input id="imgFile" type="file" accept="image/*"><label>Quality: <span id="qVal">0.7</span></label><input id="quality" type="range" min="0.1" max="1" step="0.1" value="0.7" oninput="qVal.textContent=this.value"><button class="primary" onclick="compressImage()">Compress & Download</button><div id="compressResult" class="result">Choose an image to begin.</div></div>
+
+<div id="pdfjpg" class="toolbox card"><h2>📄 PDF → JPG</h2><p class="small">PDF pages are rendered in your browser. For best results use small/medium PDFs.</p><label>Choose PDF</label><input id="pdfFile" type="file" accept="application/pdf"><button class="primary" onclick="pdfToJpg()">Convert PDF</button><div id="pdfJpgResult" class="result">Choose a PDF to begin.</div></div>
+
+<div id="jpgpdf" class="toolbox card"><h2>🖼️ JPG → PDF</h2><label>Choose Image</label><input id="jpgFile" type="file" accept="image/jpeg,image/png,image/webp"><button class="primary" onclick="jpgToPdf()">Create PDF</button><div id="jpgPdfResult" class="result">Choose an image to begin.</div></div>
+
+<div id="notes" class="toolbox card"><h2>📝 Notes Generator</h2><label>Topic / Raw Text</label><textarea id="notesInput" placeholder="Paste your chapter, class notes or topic here..."></textarea><button class="primary" onclick="generateNotes()">Generate Notes</button><button class="secondary" onclick="copyText('notesOutput')">Copy</button><button class="secondary" onclick="downloadNotes()">Download TXT</button><div id="notesOutput" class="result">Your structured notes will appear here.</div></div>
+
+<div id="ai" class="toolbox card"><h2>🤖 AI Study Assistant</h2><p class="small">This free version creates a ready-to-use AI study prompt. It does not require an API key.</p><label>What do you need help with?</label><select id="aiTask"><option>Explain this topic simply</option><option>Make exam notes</option><option>Create flashcards</option><option>Make a quiz</option><option>Create a study plan</option></select><label>Topic / Question</label><textarea id="aiTopic" placeholder="e.g. Photosynthesis, Class 10"></textarea><button class="primary" onclick="buildAiPrompt()">Create AI Prompt</button><button class="secondary" onclick="copyText('aiOutput')">Copy Prompt</button><div id="aiOutput" class="result">Your prompt will appear here.</div></div>
+
+<div id="units" class="toolbox card"><h2>📏 Unit Converter</h2><label>Category</label><select id="unitCat" onchange="updateUnits()"><option value="length">Length</option><option value="weight">Weight</option><option value="temp">Temperature</option></select><label>Value</label><input id="unitVal" type="number" value="1"><div class="grid"><div><label>From</label><select id="unitFrom"></select></div><div><label>To</label><select id="unitTo"></select></div></div><button class="primary" onclick="convertUnits()">Convert</button><div id="unitResult" class="result">Result will appear here.</div></div>
+
+<div id="timer" class="toolbox card"><h2>⏱️ Study Timer</h2><label>Minutes</label><input id="timerMin" type="number" min="1" value="25"><div id="timerDisplay" class="result" style="font-size:28px;text-align:center">25:00</div><button class="primary" onclick="startTimer()">Start</button><button class="secondary" onclick="pauseTimer()">Pause</button><button class="secondary" onclick="resetTimer()">Reset</button></div>
+
+<div id="discount" class="toolbox card"><h2>🏷️ Discount Calculator</h2><label>Original Price</label><input id="price" type="number" min="0"><label>Discount %</label><input id="disc" type="number" min="0" max="100"><button class="primary" onclick="calcDiscount()">Calculate</button><div id="discountResult" class="result">Result will appear here.</div></div>
+
+<div id="cgpapct" class="toolbox card"><h2>🎓 CGPA → Percentage</h2><label>CGPA</label><input id="cgpaValue" type="number" min="0" max="10" step="0.01" placeholder="e.g. 8.5"><label>Conversion Formula</label><select id="cgpaFormula"><option value="9.5">CGPA × 9.5</option><option value="10">CGPA × 10</option><option value="custom">Custom multiplier</option></select><div id="customWrap" style="display:none"><label>Custom Multiplier</label><input id="customMultiplier" type="number" min="0" step="0.01" value="9.5"></div><button class="primary" onclick="convertCgpaPct()">Convert</button><div id="cgpaPctResult" class="result">Result will appear here.</div><p class="small">Important: the correct CGPA-to-percentage formula depends on your board/university. Check your institution's official rule.</p></div>
+
+<div id="average" class="toolbox card"><h2>📊 Average Calculator</h2><label>Numbers</label><textarea id="avgInput" placeholder="Example: 80, 75, 92, 88"></textarea><button class="primary" onclick="calcAverage()">Calculate Average</button><div id="averageResult" class="result">Result will appear here.</div></div>
 </section>
 </div>
 
 <div id="about" class="page card"><a class="back" href="#" onclick="showHome()">← Back</a><h2>About StudentTools</h2><p>StudentTools is a simple collection of free browser-based utilities made for students. The goal is to make common calculations and small tasks quick and easy on mobile or desktop.</p><p>Available tools include percentage, CGPA, age, word counting, QR generation and image compression.</p></div>
-<div id="privacy" class="page card"><a class="back" href="#" onclick="showHome()">← Back</a><h2>Privacy Policy</h2><p>Most StudentTools utilities run directly in your browser. Calculator and text-tool inputs are processed locally by the page.</p><p>The QR Code Generator uses an external QR service to create the image, so the text or URL you enter may be sent to that service. Please do not enter sensitive or confidential information.</p><p>If analytics, advertising, accounts or other third-party services are added later, this policy should be updated to describe them.</p></div>
+<div id="privacy" class="page card"><a class="back" href="#" onclick="showHome()">← Back</a><h2>Privacy Policy</h2><p>Most StudentTools utilities run directly in your browser. Calculator and text-tool inputs are processed locally by the page.</p><p>PDF conversion features load open-source browser libraries from public CDNs. The QR Code Generator uses an external QR service to create the image, so the text or URL you enter may be sent to that service. Please do not enter sensitive or confidential information.</p><p>If analytics, advertising, accounts or other third-party services are added later, this policy should be updated to describe them.</p></div>
 <div id="contact" class="page card"><a class="back" href="#" onclick="showHome()">← Back</a><h2>Contact</h2><p>For feedback, suggestions or bug reports, replace the placeholder email below with your own email before publishing this page publicly.</p><p>📧 <b>your-email@example.com</b></p><p class="small">Tip: edit this address in index.html when you have a dedicated email.</p></div>
 </main>
 
 <footer><div class="wrap"><div>© 2026 StudentTools</div><div><a href="#" onclick="showPage('about')">About</a><a href="#" onclick="showPage('privacy')">Privacy</a><a href="#" onclick="showPage('contact')">Contact</a><a href="#" onclick="shareSite()">📤 Share</a></div></div></footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 function showHome(){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById('home').classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
 function showPage(id){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
@@ -104,6 +133,104 @@ function countWords(){let t=wordText.value;let words=t.trim()?t.trim().split(/\s
 function makeQr(){let t=qrText.value.trim();if(!t){qrBox.textContent='Enter text or a URL.';return}let img=document.createElement('img');img.alt='Generated QR code';img.src='https://api.qrserver.com/v1/create-qr-code/?size=260x260&data='+encodeURIComponent(t);qrBox.replaceChildren(img)}
 function compressImage(){let f=imgFile.files[0];if(!f){compressResult.textContent='Please select an image.';return}let r=new FileReader();r.onload=e=>{let im=new Image();im.onload=()=>{let c=document.createElement('canvas'),max=1800,s=Math.min(1,max/Math.max(im.width,im.height));c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);c.getContext('2d').drawImage(im,0,0,c.width,c.height);c.toBlob(b=>{let a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='studenttools-compressed.jpg';a.click();compressResult.textContent=`Original: ${(f.size/1024).toFixed(1)} KB · Compressed: ${(b.size/1024).toFixed(1)} KB`},'image/jpeg',+quality.value)},im.src=e.target.result};r.readAsDataURL(f)}
 async function shareSite(){let data={title:'StudentTools',text:'Free student tools - StudentTools',url:location.href};if(navigator.share){try{await navigator.share(data)}catch(e){}}else{await navigator.clipboard?.writeText(location.href);alert('Site link copied!')}}
+
+// PDF -> JPG using PDF.js module loaded from CDN
+async function pdfToJpg(){
+  const f=document.getElementById('pdfFile').files[0];
+  const out=document.getElementById('pdfJpgResult');
+  if(!f){out.textContent='Please select a PDF.';return}
+  out.textContent='Converting...';
+  try{
+    const pdfjs=await import('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs');
+    const data=await f.arrayBuffer();
+    const pdf=await pdfjs.getDocument({data}).promise;
+    for(let i=1;i<=pdf.numPages;i++){
+      const page=await pdf.getPage(i), viewport=page.getViewport({scale:1.5});
+      const c=document.createElement('canvas'); c.width=viewport.width;c.height=viewport.height;
+      await page.render({canvasContext:c.getContext('2d'),viewport}).promise;
+      const a=document.createElement('a'); a.href=c.toDataURL('image/jpeg',.9); a.download=`studenttools-page-${i}.jpg`; a.click();
+    }
+    out.textContent=`Done! ${pdf.numPages} page(s) converted.`;
+  }catch(e){out.textContent='Could not convert this PDF. Try a smaller or standard PDF.'}
+}
+
+// JPG -> PDF using jsPDF CDN
+function jpgToPdf(){
+  const f=document.getElementById('jpgFile').files[0], out=document.getElementById('jpgPdfResult');
+  if(!f){out.textContent='Please select an image.';return}
+  if(!window.jspdf){out.textContent='PDF library is still loading. Try again in a moment.';return}
+  const r=new FileReader();
+  r.onload=e=>{
+    const im=new Image();
+    im.onload=()=>{
+      const {jsPDF}=window.jspdf;
+      const orient=im.width>=im.height?'landscape':'portrait';
+      const pdf=new jsPDF({orientation:orient,unit:'px',format:[im.width,im.height]});
+      pdf.addImage(e.target.result,'JPEG',0,0,im.width,im.height);
+      pdf.save('studenttools-image.pdf'); out.textContent='PDF downloaded successfully.';
+    }; im.src=e.target.result;
+  }; r.readAsDataURL(f);
+}
+
+function generateNotes(){
+  const raw=document.getElementById('notesInput').value.trim(), out=document.getElementById('notesOutput');
+  if(!raw){out.textContent='Please enter a topic or text.';return}
+  const sentences=raw.replace(/\s+/g,' ').split(/(?<=[.!?])\s+/).filter(Boolean);
+  const bullets=sentences.slice(0,10).map(s=>'• '+s.trim()).join('\n');
+  out.textContent=`STUDY NOTES\n\nTopic: ${raw.split(/\s+/).slice(0,8).join(' ')}\n\nKEY POINTS\n${bullets || '• '+raw}\n\nQUICK REVISION\n• Read the key points once.\n• Mark definitions, formulas and examples.\n• Test yourself without looking at the notes.`;
+}
+function downloadNotes(){
+  const text=document.getElementById('notesOutput').textContent;
+  if(!text||text==='Your structured notes will appear here.')return;
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'}));a.download='studenttools-notes.txt';a.click();
+}
+function buildAiPrompt(){
+  const task=document.getElementById('aiTask').value, topic=document.getElementById('aiTopic').value.trim(), out=document.getElementById('aiOutput');
+  if(!topic){out.textContent='Enter a topic or question first.';return}
+  out.textContent=`You are my student study assistant.\n\nTask: ${task}\nTopic/Question: ${topic}\n\nPlease explain at a student-friendly level, use clear headings and examples, highlight important terms/formulas, and finish with 5 quick revision questions.`;
+}
+
+const unitData={
+ length:{meter:1,kilometer:1000,centimeter:.01,millimeter:.001,foot:.3048,inch:.0254},
+ weight:{kilogram:1,gram:.001,pound:.453592,ounce:.0283495},
+ temp:{celsius:0,fahrenheit:0,kelvin:0}
+};
+function updateUnits(){
+  const cat=document.getElementById('unitCat').value, f=document.getElementById('unitFrom'), t=document.getElementById('unitTo');
+  const names=cat==='length'?['meter','kilometer','centimeter','millimeter','foot','inch']:cat==='weight'?['kilogram','gram','pound','ounce']:['celsius','fahrenheit','kelvin'];
+  f.innerHTML=t.innerHTML=names.map(x=>`<option value="${x}">${x[0].toUpperCase()+x.slice(1)}</option>`).join('');
+  if(names[1])t.value=names[1];
+}
+function convertUnits(){
+  const cat=document.getElementById('unitCat').value,v=+document.getElementById('unitVal').value,f=document.getElementById('unitFrom').value,t=document.getElementById('unitTo').value;
+  if(!Number.isFinite(v)){unitResult.textContent='Enter a valid number.';return}
+  let r;
+  if(cat==='temp'){
+    let c=f==='celsius'?v:f==='fahrenheit'?(v-32)*5/9:v-273.15;
+    r=t==='celsius'?c:t==='fahrenheit'?c*9/5+32:c+273.15;
+  }else r=v*unitData[cat][f]/unitData[cat][t];
+  unitResult.textContent=`${v} ${f} = ${r.toFixed(4).replace(/\.?0+$/,'')} ${t}`;
+}
+updateUnits();
+
+let timerId=null, timerSeconds=1500;
+function renderTimer(){const m=Math.floor(timerSeconds/60),s=timerSeconds%60;timerDisplay.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}
+function startTimer(){if(timerId)return;if(timerSeconds<=0)timerSeconds=Math.max(1,+timerMin.value||25)*60;timerId=setInterval(()=>{if(timerSeconds>0){timerSeconds--;renderTimer()}else{clearInterval(timerId);timerId=null;alert('Study session complete! 🎉')}},1000)}
+function pauseTimer(){clearInterval(timerId);timerId=null}
+function resetTimer(){pauseTimer();timerSeconds=Math.max(1,+timerMin.value||25)*60;renderTimer()}
+timerMin.addEventListener('input',resetTimer);
+
+function calcDiscount(){const p=+price.value,d=+disc.value;if(!Number.isFinite(p)||!Number.isFinite(d)||p<0||d<0||d>100){discountResult.textContent='Enter valid values.';return}const save=p*d/100;discountResult.textContent=`Discount: ₹${save.toFixed(2)} · Final Price: ₹${(p-save).toFixed(2)}`}
+function calcAverage(){const nums=avgInput.value.split(/[\s,]+/).map(Number).filter(Number.isFinite);if(!nums.length){averageResult.textContent='Enter numbers separated by commas or spaces.';return}averageResult.textContent=`Average: ${(nums.reduce((a,b)=>a+b,0)/nums.length).toFixed(2)}`}
+
+cgpaFormula.addEventListener('change',()=>customWrap.style.display=cgpaFormula.value==='custom'?'block':'none');
+function convertCgpaPct(){
+  const c=+cgpaValue.value;
+  if(!Number.isFinite(c)||c<0||c>10){cgpaPctResult.textContent='Enter a CGPA between 0 and 10.';return}
+  const mult=cgpaFormula.value==='custom'?+customMultiplier.value:+cgpaFormula.value;
+  if(!Number.isFinite(mult)||mult<=0){cgpaPctResult.textContent='Enter a valid multiplier.';return}
+  cgpaPctResult.textContent=`Approx. Percentage: ${(c*mult).toFixed(2)}%`;
+}
 </script>
 </body>
 </html>
