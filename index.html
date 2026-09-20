@@ -57,7 +57,7 @@ input[type=range]{padding:0}
 <nav><a class="brand" href="#" onclick="showHome()">🎓 StudentTools</a>
 <div class="navlinks"><a href="#" onclick="showPage('about')">About</a><a href="#" onclick="showPage('privacy')">Privacy</a><a href="#" onclick="showPage('contact')">Contact</a><button onclick="toggleDark()">🌙</button></div></nav>
 <div class="hero"><h1>StudentTools</h1><p>Simple, fast and free tools for students — calculators, text tools, QR codes and more.</p><input id="search" class="search" placeholder="🔎 Search a tool..." oninput="filterTools()">
-<button id="installBtn" class="secondary" onclick="installApp()">📲 Install App</button></div>
+<button id="installBtn" class="secondary" onclick="installApp()">📲 Install App</button><div class="small">Android Chrome: button se prompt na aaye to Chrome ⋮ → Add to Home screen.</div></div>
 </div>
 </header>
 
@@ -312,21 +312,43 @@ window.addEventListener('beforeinstallprompt',e=>{
 });
 window.addEventListener('appinstalled',()=>{
   deferredInstall=null;
-  document.getElementById('installBtn').textContent='✅ App Installed';
+  const b=document.getElementById('installBtn');
+  if(b)b.textContent='✅ App Installed';
 });
+
 async function installApp(){
   const btn=document.getElementById('installBtn');
+
+  // Native Chrome install prompt, when the browser exposes it.
   if(deferredInstall){
-    deferredInstall.prompt();
-    try{await deferredInstall.userChoice}catch(e){}
-    deferredInstall=null;
-    return;
+    try{
+      deferredInstall.prompt();
+      const choice=await deferredInstall.userChoice;
+      deferredInstall=null;
+      if(choice && choice.outcome==='accepted'){
+        btn.textContent='✅ Installing...';
+        return;
+      }
+    }catch(e){}
   }
-  if(window.matchMedia('(display-mode: standalone)').matches){
+
+  // Already running as an installed PWA.
+  if(window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true){
+    alert('StudentTools already installed hai. 🎉');
     btn.textContent='✅ Already Installed';
     return;
   }
-  alert('Android Chrome: browser ke ⋮ menu par tap karo → Add to Home screen / Install app. Agar option na dikhe to page ko ek baar refresh karke dobara try karo.');
+
+  // Reliable fallback: explain the browser's own install action.
+  const isAndroid=/Android/i.test(navigator.userAgent);
+  const isIOS=/iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if(isAndroid){
+    alert('📲 StudentTools install karne ke liye:\\n\\n1. Chrome ke ⋮ menu par tap karo\\n2. “Add to Home screen” ya “Install app” select karo\\n3. Add/Install dabao\\n\\nAgar option na dikhe, page ko refresh karke dobara try karo.');
+  }else if(isIOS){
+    alert('📲 iPhone/iPad par:\\n\\n1. Safari ka Share button tap karo\\n2. “Add to Home Screen” select karo\\n3. Add tap karo.');
+  }else{
+    alert('📲 Browser ke menu me “Install app” ya “Add to Home screen” option choose karo.');
+  }
 }
 loadFavs();renderRecent();
 </script></body>
