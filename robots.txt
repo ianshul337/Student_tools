@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ianshul337.github.io/Student_tools/sitemap.xml
