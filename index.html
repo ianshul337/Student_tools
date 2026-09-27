@@ -13,7 +13,8 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ianshul337.github.io/Student_tools/">
 <meta name="twitter:card" content="summary">
-<title>StudentTools - Free Student Tools</title>
+<meta name="author" content="StudentTools">
+<title>StudentTools — Free Student Tools</title>
 <link rel="icon" href="favicon.svg">
 <link rel="manifest" href="manifest.webmanifest">
 <style>
@@ -63,6 +64,7 @@ input[type=range]{padding:0}
 <section><div class="section-title"><h2>⭐ Popular Tools</h2></div>
 <div class="categorybar">
 <button class="catbtn active" onclick="setCategory('all',this)">All</button>
+<button class="catbtn" onclick="setCategory('favorites',this)">⭐ Favorites</button>
 <button class="catbtn" onclick="setCategory('calculator',this)">🧮 Calculators</button>
 <button class="catbtn" onclick="setCategory('study',this)">📚 Study</button>
 <button class="catbtn" onclick="setCategory('pdf',this)">📄 PDF</button>
@@ -70,7 +72,7 @@ input[type=range]{padding:0}
 <button class="catbtn" onclick="setCategory('text',this)">✍️ Text</button>
 <button class="catbtn" onclick="setCategory('utility',this)">🛠️ Utilities</button>
 </div>
-<div class="statbar"><span>⚡ Fast browser tools</span><span>🔒 Most processing stays on your device</span><span>💙 Free to use</span></div>
+<div class="statbar"><span>⚡ Fast browser tools</span><span>🔒 Most processing stays on your device</span><span>💙 Free to use</span><button class="secondary" style="margin-top:0" onclick="shareSite()">↗️ Share Site</button></div>
 <div class="grid">
 <div class="card tool" data-name="percentage calculator"><h3>🧮 Percentage Calculator</h3><button class="fav" title="Favourite" onclick="toggleFav(this)">☆</button><p>Calculate marks percentage instantly.</p><button class="primary" onclick="openTool('percentage')">Use Tool</button></div>
 <div class="card tool" data-name="age calculator"><h3>🎂 Age Calculator</h3><button class="fav" title="Favourite" onclick="toggleFav(this)">☆</button><p>Find your exact age from date of birth.</p><button class="primary" onclick="openTool('age')">Use Tool</button></div>
@@ -301,12 +303,15 @@ function setCategory(cat,btn){
 }
 function filterTools(){
   const q=document.getElementById('search').value.toLowerCase().trim();
+  const favs=getFavs();
   let shown=0;
   document.querySelectorAll('.tool').forEach(c=>{
     const matchText=c.dataset.name.includes(q);
-    const matchCat=activeCategory==='all'||c.dataset.category===activeCategory;
-    c.style.display=matchText&&matchCat?'block':'none';
-    if(matchText&&matchCat)shown++;
+    const isFav=favs.includes(c.dataset.name);
+    const matchCat=activeCategory==='all'||(activeCategory==='favorites'?isFav:c.dataset.category===activeCategory);
+    const visible=matchText&&matchCat;
+    c.style.display=visible?'block':'none';
+    if(visible)shown++;
   });
   document.getElementById('emptySearch').style.display=shown?'none':'block';
 }
@@ -314,8 +319,10 @@ function favKey(){return 'stFavs'}
 function getFavs(){try{return JSON.parse(localStorage.getItem(favKey())||'[]')}catch(e){return []}}
 function toggleFav(btn){
   const card=btn.closest('.tool'), name=card.dataset.name, favs=getFavs(), i=favs.indexOf(name);
-  if(i>=0){favs.splice(i,1);btn.textContent='☆'}else{favs.push(name);btn.textContent='★'}
+  if(i>=0){favs.splice(i,1)}else{favs.push(name)}
   localStorage.setItem(favKey(),JSON.stringify(favs));
+  loadFavs();
+  filterTools();
 }
 function loadFavs(){
   const favs=getFavs();document.querySelectorAll('.tool').forEach(c=>{const b=c.querySelector('.fav');if(b)b.textContent=favs.includes(c.dataset.name)?'★':'☆'})
