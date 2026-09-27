@@ -14,6 +14,14 @@
 <meta property="og:url" content="https://ianshul337.github.io/Student_tools/">
 <meta name="twitter:card" content="summary">
 <meta name="author" content="StudentTools">
+<meta name="application-name" content="StudentTools">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="StudentTools">
+<meta property="og:site_name" content="StudentTools">
+<meta property="og:image" content="https://ianshul337.github.io/Student_tools/icon-512.png">
+<meta name="twitter:title" content="StudentTools — Free Student Tools">
+<meta name="twitter:description" content="Free online calculators, study tools, text tools, PDF and image utilities for students.">
+<meta name="twitter:image" content="https://ianshul337.github.io/Student_tools/icon-512.png">
 <title>StudentTools — Free Student Tools</title>
 <link rel="icon" href="favicon.svg">
 <link rel="manifest" href="manifest.webmanifest">
@@ -48,6 +56,31 @@ input[type=range]{padding:0}
 .card-top{display:flex;justify-content:space-between;gap:8px}.fav{border:0;background:transparent;font-size:20px;cursor:pointer;padding:0}.tool-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.tag{font-size:11px;padding:3px 7px;border-radius:999px;background:#eef0ff;color:#4338ca}.dark .tag{background:#252b42;color:#bfc7ff}
 .install{display:none;margin:10px auto 0}.install.show{display:inline-block}.empty{display:none;text-align:center;padding:20px}.statbar{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;color:#667085;margin-top:10px}.dark .statbar{color:#aab3c7}
 </style>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebSite",
+  "name":"StudentTools",
+  "url":"https://ianshul337.github.io/Student_tools/",
+  "description":"Free online calculators, study tools, text tools, PDF and image utilities for students.",
+  "potentialAction":{"@type":"SearchAction","target":"https://ianshul337.github.io/Student_tools/?q={search_term_string}","query-input":"required name=search_term_string"}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"ItemList",
+  "name":"StudentTools online utilities",
+  "itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Percentage Calculator","url":"https://ianshul337.github.io/Student_tools/#tool-percentage"},
+    {"@type":"ListItem","position":2,"name":"CGPA Calculator","url":"https://ianshul337.github.io/Student_tools/#tool-cgpa"},
+    {"@type":"ListItem","position":3,"name":"Age Calculator","url":"https://ianshul337.github.io/Student_tools/#tool-age"},
+    {"@type":"ListItem","position":4,"name":"Word Counter","url":"https://ianshul337.github.io/Student_tools/#tool-words"},
+    {"@type":"ListItem","position":5,"name":"QR Code Generator","url":"https://ianshul337.github.io/Student_tools/#tool-qr"},
+    {"@type":"ListItem","position":6,"name":"Image Compressor","url":"https://ianshul337.github.io/Student_tools/#tool-compress"}
+  ]
+}
+</script>
 </head>
 <body>
 <header>
@@ -136,9 +169,16 @@ input[type=range]{padding:0}
 <div id="about" class="page card"><a class="back" href="./" onclick="showHome();return false">← Back</a><h2>About StudentTools</h2><p>StudentTools is a simple collection of free browser-based utilities made for students. The goal is to make common calculations and small tasks quick and easy on mobile or desktop.</p><p>Available tools include percentage, CGPA, age, word counting, QR generation and image compression.</p></div>
 <div id="privacy" class="page card"><a class="back" href="./" onclick="showHome();return false">← Back</a><h2>Privacy Policy</h2><p>Most StudentTools utilities run directly in your browser. Calculator and text-tool inputs are processed locally by the page.</p><p>PDF conversion features load open-source browser libraries from public CDNs. The QR Code Generator uses an external QR service to create the image, so the text or URL you enter may be sent to that service. Please do not enter sensitive or confidential information.</p><p>If analytics, advertising, accounts or other third-party services are added later, this policy should be updated to describe them.</p></div>
 <div id="contact" class="page card"><a class="back" href="./" onclick="showHome();return false">← Back</a><h2>Contact</h2><p>For feedback, suggestions or bug reports, replace the placeholder email below with your own email before publishing this page publicly.</p><p>📧 <b>your-email@example.com</b></p><p class="small">Tip: edit this address in index.html when you have a dedicated email.</p></div>
+<section class="card" id="faq" style="margin-top:20px">
+<h2>❓ Frequently Asked Questions</h2>
+<h3>Are StudentTools free?</h3><p>Yes. The tools on this site are provided for free use.</p>
+<h3>Do the calculators work on mobile?</h3><p>Yes. StudentTools is designed to work in modern mobile and desktop browsers.</p>
+<h3>Is my calculator or text input uploaded?</h3><p>Most calculator and text tools process input directly in your browser. Check the Privacy page for features that use external services.</p>
+<h3>Can I use StudentTools without installing an app?</h3><p>Yes. The website can be used directly in your browser.</p>
+</section>
 </main>
 
-<footer><div class="wrap"><div>© 2026 StudentTools</div><div><a href="?page=about" onclick="showPage('about');return false">About</a><a href="?page=privacy" onclick="showPage('privacy');return false">Privacy</a><a href="?page=contact" onclick="showPage('contact');return false">Contact</a><a href="#" onclick="shareSite()">📤 Share</a></div></div></footer>
+<footer><div class="wrap"><div>© 2026 StudentTools</div><div><a href="?page=about" onclick="showPage('about');return false">About</a><a href="?page=privacy" onclick="showPage('privacy');return false">Privacy</a><a href="?page=contact" onclick="showPage('contact');return false">Contact</a><a href="#faq">FAQ</a><a href="#" onclick="shareSite()">📤 Share</a></div><div><a href="#tool-percentage" onclick="openTool('percentage')">Percentage</a><a href="#tool-cgpa" onclick="openTool('cgpa')">CGPA</a><a href="#tool-words" onclick="openTool('words')">Word Counter</a><a href="#tool-age" onclick="openTool('age')">Age</a></div></div></footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>

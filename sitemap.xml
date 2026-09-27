@@ -1,1 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://ianshul337.github.io/Student_tools//</loc></url><url><loc>https://ianshul337.github.io/Student_tools/percentage-calculator/</loc></url><url><loc>https://ianshul337.github.io/Student_tools/cgpa-calculator/</loc></url><url><loc>https://ianshul337.github.io/Student_tools/age-calculator/</loc></url><url><loc>https://ianshul337.github.io/Student_tools/word-counter/</loc></url><url><loc>https://ianshul337.github.io/Student_tools/image-compressor/</loc></url><url><loc>https://ianshul337.github.io/Student_tools/privacy/</loc></url><url><loc>https://ianshul337.github.io/Student_tools/contact/</loc></url></urlset>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://ianshul337.github.io/Student_tools/</loc></url>
+  <url><loc>https://ianshul337.github.io/Student_tools/#tool-percentage</loc></url>
+  <url><loc>https://ianshul337.github.io/Student_tools/#tool-cgpa</loc></url>
+  <url><loc>https://ianshul337.github.io/Student_tools/#tool-age</loc></url>
+  <url><loc>https://ianshul337.github.io/Student_tools/#tool-words</loc></url>
+  <url><loc>https://ianshul337.github.io/Student_tools/#tool-qr</loc></url>
+  <url><loc>https://ianshul337.github.io/Student_tools/#tool-compress</loc></url>
+</urlset>
